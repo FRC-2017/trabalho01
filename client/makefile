@@ -1,4 +1,4 @@
-NAME = trabalho01
+NAME = trabalho01_client
 
 SRC_DIR = src
 INC_DIR = include
