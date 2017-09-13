@@ -5,7 +5,7 @@
 #include <string.h>
 
 int server(int client_socket) {
-	ssize_t bytes_read;
+	ssize_t bytes_recv;
 	char operation[3] = {0};
 	int first_number;
 	int second_number;
@@ -13,25 +13,21 @@ int server(int client_socket) {
 
 
 	while(1) {
-		bytes_read = read(client_socket, operation, 3);
-
-		if(bytes_read <= 0) {
-			printf("Nothing to read!\n");
-			while((bytes_read = read(client_socket, operation, 3)) <= 0);
-		}
+		
+		while((bytes_recv = recv(client_socket, operation, 3, 0)) <= 0);
 
 		printf("Operation: %s\n", operation);
-		bytes_read = read(client_socket, &first_number, sizeof(first_number));
+		bytes_recv = recv(client_socket, &first_number, sizeof(first_number), 0);
 
-		if(bytes_read <= 0) {
-			printf("Nothing to read!\n");
+		if(bytes_recv <= 0) {
+			printf("Nothing to recv!\n");
 		}
 
 		printf("First number: %d\n", first_number);
-		bytes_read = read(client_socket, &second_number, sizeof(second_number));
+		bytes_recv = recv(client_socket, &second_number, sizeof(second_number), 0);
 
-		if(bytes_read <= 0) {
-			printf("Nothing to read!\n");
+		if(bytes_recv <= 0) {
+			printf("Nothing to recv!\n");
 		}
 
 		printf("Second number: %d\n", (int)second_number);
