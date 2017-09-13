@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 #define SERVER_PORT 8080
 
@@ -26,13 +27,15 @@ int main(int argc, char* argv[]) {
 
 	printf("Client connected to server\n");
 
-	send(socket_fd, operation, sizeof(operation), 0);
-	send(socket_fd, &first_integer, sizeof(first_integer), 0);
-	send(socket_fd, &second_integer, sizeof(second_integer), 0);
+	while(1) {
+		send(socket_fd, operation, sizeof(operation), 0);
+		send(socket_fd, &first_integer, sizeof(first_integer), 0);
+		send(socket_fd, &second_integer, sizeof(second_integer), 0);
 
-	recv(socket_fd, &result, sizeof(result), 0);
-
-	printf("Resultado: %d\n", result);
+		recv(socket_fd, &result, sizeof(result), 0);
+		printf("Resultado: %d\n", result);
+		sleep(5);
+	}
 
 	return 0;
 }

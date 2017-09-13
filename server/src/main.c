@@ -39,8 +39,6 @@ int main (int argc, char* argv[]) {
 
 	printf("connection received!\n");
 
-	result = server(client_socket);
-
-	send(client_socket, &result, sizeof(result), 0);
+	server(client_socket);
 	return 0;
 }
