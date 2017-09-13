@@ -4,49 +4,63 @@
 #include <unistd.h>
 #include <string.h>
 
-int client(){
+struct OpValues {
+	int firstValue;
+	int secondValue;
+	char operand[1];
+};
 
-	char legal[80];
-	printf("Escreva a expressão\n");
-	gets(legal);
-
-	int lenght = strlen(legal);
-	int firstValue=0, secondValue=0;
+struct OpValues handleString(char string[80], struct OpValues Values){
+	int lenght = strlen(string);
 	int i = 0;
 
 	char firstString[80];
 	char operator[1];
 	char secondString[80];
 
-	operator[0] = ' ';
+	Values.operand[0] = ' ';
 
-	while(operator[0] == ' '){
-		if(legal[i] >= 48 && legal[i] <=57){
-			firstString[i] = legal[i];	
+	while(Values.operand[0] == ' '){
+		if(string[i] >= 48 && string[i] <=57){
+			firstString[i] = string[i];	
 		}
 
-		if(legal[i] == '+'){
-			operator[0] = legal[i];
+		//Não está tratando operadores inválidos
+		if(string[i] == '+' || string[i] == '-' || string[i] == '*' || string[i] == '/'){
+			Values.operand[0] = string[i];
 		}
 		i++;
 	}
 
 	int j=0;
 	while(i<=lenght){
-		if(legal[i] >= 48 && legal[i] <= 58){
-			secondString[j] = legal[i];
+		if(string[i] >= 48 && string[i] <= 58){
+			secondString[j] = string[i];
 			j++;
 		}
 
 		i++;
 	}
 		
-	sscanf(firstString, "%d", &firstValue);
-	sscanf(secondString, "%d", &secondValue);
+	sscanf(firstString, "%d", &Values.firstValue);
+	sscanf(secondString, "%d", &Values.secondValue);
 
-	printf("%d\n", firstValue);
-	printf("%c\n", operator[0]);
-	printf("%d\n", secondValue);
+	return Values;
+}
+
+int client(){
+
+	char string[80];
+	printf("Escreva a expressão\n");
+	gets(string);
+
+	struct OpValues Values;
+
+	Values = handleString(string, Values);
+
+	printf("%d\n", Values.firstValue);
+	printf("%c\n", Values.operand[0]);
+	printf("%d\n", Values.secondValue);
 
 	return 0;
 }
