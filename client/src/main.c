@@ -9,7 +9,7 @@
 int main(int argc, char* argv[]) {
 	struct sockaddr_in server;
 	int socket_fd;
-	int first_integer = 10;
+	int first_integer =4;
 	int second_integer = 12;
 	int result = -1;
 	char operation[3] = "ADD";

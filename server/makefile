@@ -8,7 +8,7 @@ BIN_DIR = bin
 TARGET = $(BIN_DIR)/$(NAME)
 
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -lpthread
 
 SRC = ${wildcard $(SRC_DIR)/*.c}
 OBJ = ${addprefix $(OBJ_DIR)/, ${notdir ${SRC:.c=.o}}}
