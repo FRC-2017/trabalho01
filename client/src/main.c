@@ -9,10 +9,11 @@
 int main(int argc, char* argv[]) {
 	struct sockaddr_in server;
 	int socket_fd;
-	int first_integer =4;
-	int second_integer = 12;
+	int first_integer = 5;
+	int second_integer = 2;
 	int result = -1;
-	char operation[3] = "ADD";
+	int sucess = 1;
+	char operation[3] = "DIV";
 
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -21,7 +22,7 @@ int main(int argc, char* argv[]) {
 	server.sin_port = htons(SERVER_PORT);
 
 	if(connect(socket_fd, (struct sockaddr*)&server, sizeof(server)) < 0) {
-		printf("Error on bind!\n");
+		printf("Error on connect!\n");
 		return -1;
 	}
 
@@ -32,8 +33,14 @@ int main(int argc, char* argv[]) {
 		send(socket_fd, &first_integer, sizeof(first_integer), 0);
 		send(socket_fd, &second_integer, sizeof(second_integer), 0);
 
+		recv(socket_fd, &sucess, sizeof(sucess), 0);
 		recv(socket_fd, &result, sizeof(result), 0);
-		printf("Resultado: %d\n", result);
+		if(sucess == 0) {
+			printf("Resultado: %d\n", result);
+		}
+		else {
+			printf("Ocorreu algum erro na operação!\n");
+		}
 		sleep(5);
 	}
 
