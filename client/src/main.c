@@ -4,6 +4,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+#include "socket_client.h"
+
 #define SERVER_PORT 8080
 
 int main(int argc, char* argv[]) {
@@ -29,6 +31,7 @@ int main(int argc, char* argv[]) {
 	printf("Client connected to server\n");
 
 	while(1) {
+		client();
 		send(socket_fd, operation, sizeof(operation), 0);
 		send(socket_fd, &first_integer, sizeof(first_integer), 0);
 		send(socket_fd, &second_integer, sizeof(second_integer), 0);

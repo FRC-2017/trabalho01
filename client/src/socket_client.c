@@ -3,11 +3,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include "socket_client.h"
 
 struct OpValues {
 	int firstValue;
 	int secondValue;
-	char operand[1];
+	char operand[3];
 };
 
 struct OpValues handleString(char string[80], struct OpValues Values){
@@ -15,7 +16,6 @@ struct OpValues handleString(char string[80], struct OpValues Values){
 	int i = 0;
 
 	char firstString[80];
-	char operator[1];
 	char secondString[80];
 
 	Values.operand[0] = ' ';
@@ -26,8 +26,17 @@ struct OpValues handleString(char string[80], struct OpValues Values){
 		}
 
 		//Não está tratando operadores inválidos
-		if(string[i] == '+' || string[i] == '-' || string[i] == '*' || string[i] == '/'){
-			Values.operand[0] = string[i];
+		if(string[i] == '+'){
+			strcpy(Values.operand, "ADD");
+		}
+		if(string[i] == '-'){
+			strcpy(Values.operand, "SUB");
+		}
+		if(string[i] == '*'){
+			strcpy(Values.operand, "MUL");
+		}
+		if(string[i] == '/'){
+			strcpy(Values.operand, "DIV");
 		}
 		i++;
 	}
@@ -48,7 +57,7 @@ struct OpValues handleString(char string[80], struct OpValues Values){
 	return Values;
 }
 
-int client(){
+void* client(){
 
 	char string[80];
 	printf("Escreva a expressão\n");
@@ -59,8 +68,7 @@ int client(){
 	Values = handleString(string, Values);
 
 	printf("%d\n", Values.firstValue);
-	printf("%c\n", Values.operand[0]);
+	printf("%s\n", Values.operand);
 	printf("%d\n", Values.secondValue);
 
-	return 0;
 }
