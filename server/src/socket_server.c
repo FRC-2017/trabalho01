@@ -9,7 +9,7 @@
 void* server(void* client_socket) {
 	int socket = *(int*)client_socket;
 	ssize_t bytes_recv;
-	char operation[4] = {0};
+	char operation[4];
 	int first_number;
 	int second_number;
 	int result;
@@ -17,7 +17,7 @@ void* server(void* client_socket) {
 
 	while(1) {
 		
-		while((bytes_recv = read(socket, operation, 3)) <= 0);
+		while((bytes_recv = read(socket, operation, sizeof(operation))) <= 0);
 
 		operation[4] = '\0';
 

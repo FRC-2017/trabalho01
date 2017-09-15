@@ -5,17 +5,19 @@
 #include <unistd.h>
 
 #include "socket_client.h"
+#include "expression_handler.h"
 
 #define SERVER_PORT 8080
 
 int main(int argc, char* argv[]) {
 	struct sockaddr_in server;
 	int socket_fd;
-	int first_integer = 5;
-	int second_integer = 2;
 	int result = -1;
 	int sucess = 1;
-	char operation[3] = "DIV";
+	char* expression = NULL;
+	expression_values* values;
+	int first_value;
+	int second_value;
 
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -31,10 +33,17 @@ int main(int argc, char* argv[]) {
 	printf("Client connected to server\n");
 
 	while(1) {
-		client();
-		send(socket_fd, operation, sizeof(operation), 0);
-		send(socket_fd, &first_integer, sizeof(first_integer), 0);
-		send(socket_fd, &second_integer, sizeof(second_integer), 0);
+		expression = read_expression();
+		values = get_values(expression);
+
+		if(!values) {
+			printf("Invalid expression!\n");
+			return 1;
+		}
+		
+		send(socket_fd, values->operand, sizeof(values->operand), 0);
+		send(socket_fd, &values->first_value, sizeof(first_value), 0);
+		send(socket_fd, &values->second_value, sizeof(second_value), 0);
 
 		recv(socket_fd, &sucess, sizeof(sucess), 0);
 		recv(socket_fd, &result, sizeof(result), 0);
@@ -44,7 +53,6 @@ int main(int argc, char* argv[]) {
 		else {
 			printf("Ocorreu algum erro na operação!\n");
 		}
-		sleep(5);
 	}
 
 	return 0;
