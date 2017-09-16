@@ -57,7 +57,12 @@ expression_values* get_values(char* expression) {
 			string_size++;
 			first_value = realloc(first_value, string_size);
 			first_value[string_size - 1] = expression[i];
-		} 
+		}
+		else if(expression[i] == '-' && string_size == 0) {
+			string_size++;
+			first_value = realloc(first_value, string_size);
+			first_value[string_size - 1] = expression[i];
+		}
 		else if(i == 0){
 			printf("Não foi encontrado um numero no inicio!\n");
 			return NULL;
@@ -114,7 +119,12 @@ expression_values* get_values(char* expression) {
 			string_size++;
 			second_value = realloc(second_value, string_size);
 			second_value[string_size - 1] = expression[i];
-		} 
+		}
+		else if(expression[i] == '-' && string_size == 0) {
+			string_size++;
+			second_value = realloc(second_value, string_size);
+			second_value[string_size - 1] = expression[i];
+		}
 		else if(expression[i] == '\0') {
 			break;
 		}

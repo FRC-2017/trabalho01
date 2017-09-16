@@ -10,5 +10,14 @@
 
 // }
 
+void print_error_code(int code) {
+	if(code == ERROR_DIVISION_BY_0) {
+		printf("Erro de divisão por 0!\n");
+	}
+	else {
+		printf("Erro desconhecido...\n");
+	}
+}
+
 void client(){
 }

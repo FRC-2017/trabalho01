@@ -7,6 +7,7 @@
 #include <pthread.h>
 
 #include "socket_server.h"
+#include "operations_handler.h"
 
 #define SERVER_PORT 8080
 

@@ -52,6 +52,7 @@ int main(int argc, char* argv[]) {
 		}
 		else {
 			printf("Ocorreu algum erro na operação!\n");
+			print_error_code(result);
 		}
 	}
 
