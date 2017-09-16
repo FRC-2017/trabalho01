@@ -63,6 +63,17 @@ int subtract(int first_number, int second_number, int* success) {
 }
 
 int multiply(int first_number, int second_number, int* success) {
+	int same_sign;
+	int first_module = module(first_number);
+	int second_module = module(second_number);
+
+	if( (first_number > 0 && second_number > 0) || (first_number < 0 && second_number < 0)) {
+		same_sign = 1;
+	}
+	else {
+		same_sign = 0;
+	}
+
 	if((first_number == -1) && (second_number == INT_MIN)) {
 		printf("Ocorreu um overflow na multiplicação!\nOperação cancelada.\n");
 		*success = ERROR;
@@ -73,15 +84,17 @@ int multiply(int first_number, int second_number, int* success) {
 		*success = ERROR;
 		return ERROR_OVERFLOW;
 	}
-	else if(first_number > INT_MAX / second_number) {
-		printf("Ocorreu um overflow na multiplicação!\nOperação cancelada.\n");
+	else if(first_module > INT_MAX / second_module) {
 		*success = ERROR;
-		return ERROR_OVERFLOW;
-	}
-	else if(first_number < INT_MIN / second_number) {
-		printf("Ocorreu um underflow na multiplicação!\nOperação cancelada.\n");
-		*success = ERROR;
+
+		if(same_sign){
+			printf("Ocorreu um overflow na multiplicação!\nOperação cancelada.\n");
+			return ERROR_OVERFLOW;
+		}
+		else {
+			printf("Ocorreu um underflow na multiplicação!\nOperação cancelada.\n");
 		return ERROR_UNDERFLOW;
+		}
 	}
 
 	int result = first_number * second_number;
@@ -113,4 +126,13 @@ double division_with_reminder(int first_number, int second_number) {
 	double result = (double) first_number / (double) second_number;
 
 	return result;
+}
+
+int module(int number) {
+	if(number > 0) {
+		return number;
+	}
+	else {
+		return -number;
+	}
 }

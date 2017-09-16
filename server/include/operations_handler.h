@@ -17,5 +17,6 @@ int subtract(int first_number, int second_number, int* sucess);
 int multiply(int first_number, int second_number, int* sucess);
 int divide(int first_number, int second_number, int* sucess);
 double division_with_reminder(int first_number, int second_number);
+int module(int number);
 
 #endif
