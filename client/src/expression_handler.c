@@ -59,11 +59,12 @@ expression_values* get_values(char* expression) {
 			first_value[string_size - 1] = expression[i];
 		} 
 		else if(i == 0){
-			printf("operação invalida!\n");
+			printf("Não foi encontrado um numero no inicio!\n");
 			return NULL;
 		}
 		else {
 			state = OPERAND;
+			break;
 		}
 
 		i++;
@@ -114,8 +115,12 @@ expression_values* get_values(char* expression) {
 			second_value = realloc(second_value, string_size);
 			second_value[string_size - 1] = expression[i];
 		} 
-		else if(expression[i] != ' ') {
+		else if(expression[i] == '\0') {
 			break;
+		}
+		else if(expression[i] != ' ') {
+			printf("caractere invalido após o operando!\n");
+			return NULL;
 		}
 
 		i++;

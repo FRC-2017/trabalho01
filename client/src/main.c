@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 		values = get_values(expression);
 
 		if(!values) {
-			printf("Invalid expression!\n");
+			printf("Erro nos valores!\n");
 			return 1;
 		}
 		
