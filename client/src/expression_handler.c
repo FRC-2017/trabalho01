@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
 #include "expression_handler.h"
 
@@ -138,7 +139,49 @@ expression_values* get_values(char* expression) {
 
 	second_value = realloc(second_value, string_size + 1);
 	second_value[i] = '\0';
-	sscanf(first_value, "%d", &values->first_value);
-	sscanf(second_value, "%d", &values->second_value);
-	return values;
+
+	if(valid_numbers(first_value, second_value)) {
+		sscanf(first_value, "%d", &values->first_value);
+		sscanf(second_value, "%d", &values->second_value);
+		return values;
+	}
+	else {
+		return NULL;
+	}
+}
+
+int valid_numbers(char* first_value, char* second_value) {
+	char maximum_int[12];
+	char minimum_int[12];
+	sprintf(maximum_int, "%d", INT_MAX);
+	sprintf(minimum_int, "%d", INT_MIN);
+
+
+	if(strlen(first_value) < strlen(maximum_int)) {
+		if((strcmp(first_value, maximum_int) < 0) || (strcmp(first_value, minimum_int) > 0)) {
+			return VALID;
+		}
+		else {
+			printf("primeiro numero digitado inválido!\n");
+			return INVALID;
+		}
+	}
+	else {
+		printf("primeiro numero digitado inválido!\n");
+		return INVALID;
+	}
+
+	if(strlen(second_value) < strlen(maximum_int)){
+		if((strcmp(second_value, maximum_int) < 0) || (strcmp(second_value, minimum_int) > 0)) {
+			return VALID;
+		}
+		else {
+			printf("Segundo numero digitado inválido!\n");
+			return INVALID;
+		}
+	}
+	else {
+		printf("Segundo numero digitado inválido!\n");
+		return INVALID;
+	}
 }

@@ -6,6 +6,8 @@
 #define SECOND_VALUE 2
 #define ASCII_0 48
 #define ASCII_9 57
+#define VALID 1
+#define INVALID 0
 
 typedef struct expression_values {
 	int first_value;
@@ -15,5 +17,6 @@ typedef struct expression_values {
 
 char* read_expression();
 expression_values* get_values(char* expression);
+int valid_numbers(char* first_value, char* second_value);
 
 #endif
