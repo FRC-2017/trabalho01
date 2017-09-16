@@ -11,11 +11,22 @@
 // }
 
 void print_error_code(int code) {
-	if(code == ERROR_DIVISION_BY_0) {
-		printf("Erro de divisão por 0!\n");
-	}
-	else {
-		printf("Erro desconhecido...\n");
+	switch(code) {
+		case ERROR_DIVISION_BY_0:
+			printf("Erro de divisão por 0!\n");
+			return;
+
+		case ERROR_OVERFLOW:
+			printf("Ocorreu um overflow na operação!\n");
+			return;
+
+		case ERROR_UNDERFLOW:
+			printf("Ocorreu um underflow na operação!\n");
+			return;
+
+		default:
+			printf("Erro desconhecido!\n");
+			return;
 	}
 }
 
