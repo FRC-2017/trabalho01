@@ -13,7 +13,8 @@ int main(int argc, char* argv[]) {
 	struct sockaddr_in server;
 	int socket_fd;
 	int result = -1;
-	int sucess = 1;
+	int success = 1;
+	double division_result;
 	char* expression = NULL;
 	expression_values* values;
 	int first_value;
@@ -45,10 +46,16 @@ int main(int argc, char* argv[]) {
 		send(socket_fd, &values->first_value, sizeof(first_value), 0);
 		send(socket_fd, &values->second_value, sizeof(second_value), 0);
 
-		recv(socket_fd, &sucess, sizeof(sucess), 0);
+		recv(socket_fd, &success, sizeof(success), 0);
 		recv(socket_fd, &result, sizeof(result), 0);
-		if(sucess == 0) {
+		if(success == SUCCESS) {
 			printf("Resultado: %d\n", result);
+		}
+		else if(success == WARNING) {
+			if(result == WARNING_DIVISION_WITH_REMINDER) {
+				recv(socket_fd, &division_result, sizeof(division_result), 0);
+				printf("Resultado: %.2f\n", division_result);
+			}
 		}
 		else {
 			printf("Ocorreu algum erro na operação!\n");

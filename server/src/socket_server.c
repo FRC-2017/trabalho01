@@ -13,6 +13,7 @@ void* server(void* client_socket) {
 	int first_number;
 	int second_number;
 	int result;
+	double division_result;
 	int success = 1;
 
 	while(1) {
@@ -30,8 +31,16 @@ void* server(void* client_socket) {
 		printf("Second number: %d\n", (int)second_number);
 
 		result = handle_operations(operation, first_number, second_number, &success);
+
 		send(socket, &success, sizeof(success), 0);
 		send(socket, &result, sizeof(result), 0);
+
+		if(success == WARNING) {
+			if(result == WARNING_DIVISION_WITH_REMINDER) {
+				division_result = division_with_reminder(first_number, second_number);
+				send(socket, &division_result, sizeof(division_result), 0);
+			}
+		}
 	}
 
 

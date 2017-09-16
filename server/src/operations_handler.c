@@ -83,7 +83,7 @@ int multiply(int first_number, int second_number, int* success) {
 		*success = ERROR;
 		return ERROR_UNDERFLOW;
 	}
-	
+
 	int result = first_number * second_number;
 	*success = SUCCESS;
 
@@ -92,14 +92,25 @@ int multiply(int first_number, int second_number, int* success) {
 
 int divide(int first_number, int second_number, int* success) {
 	int result;
-	if(second_number != 0) {
-		result = first_number / second_number;
-		*success = SUCCESS;
-		return result;
-	}
-	else {
+	if(second_number == 0) {
 		printf("Divisão por 0!\n");
 		*success = ERROR;
 		return ERROR_DIVISION_BY_0;
 	}
+	else if((first_number % second_number) != 0) {
+			printf("Divisão com resto diferente de 0. Mudando variáveis para double.\n");
+			*success = WARNING;
+			return WARNING_DIVISION_WITH_REMINDER;
+	}
+	else {
+		result = first_number / second_number;
+		*success = SUCCESS;
+		return result;
+	}
+}
+
+double division_with_reminder(int first_number, int second_number) {
+	double result = (double) first_number / (double) second_number;
+
+	return result;
 }
