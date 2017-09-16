@@ -11,5 +11,8 @@
 
 #define WARNING_DIVISION_WITH_REMINDER 500
 
+int connect_to_server();
+int talk_to_server(int socket_fd);
 void print_error_code(int code);
+
 #endif
